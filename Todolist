@@ -1,0 +1,101 @@
+import 'package:flutter/material.dart';
+
+class TodoList extends StatefulWidget {
+  // final List<String> name = ["aa","bb","cc"];
+  const TodoList({super.key});
+
+  @override
+  State<TodoList> createState() => _TodoListState();
+}
+
+class _TodoListState extends State<TodoList> {
+  final List<String> todoItems = [];
+  final TextEditingController control = TextEditingController();
+
+  void addList(String task) {
+    if (task.isNotEmpty) {
+      setState(() {
+        todoItems.add(task);
+      });
+    }
+    control.clear();
+  }
+
+  void deleteList(int index) {
+    setState(() {
+      todoItems.removeAt(index);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width - 120,
+                child: TextFormField(
+                  controller: control,
+                  decoration: const InputDecoration(
+                      label: Text(
+                    "ระบุรายการ",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  )),
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              IconButton(
+                  onPressed: () => addList(control.text),
+                  icon: const Icon(
+                    Icons.add_box,
+                    color: Colors.blue,
+                    size: 40,
+                  ))
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(
+              child: ListView.builder(
+            itemCount: todoItems.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(
+                  todoItems[index],
+                  style: const TextStyle(fontSize: 15, color: Colors.black),
+                ),
+                trailing: IconButton(
+                  icon: const Icon(
+                    Icons.remove_circle,
+                    color: Colors.red,
+                  ),
+                  onPressed: () => deleteList(index),
+                ),
+              );
+            },
+          ))
+        ],
+      ),
+    );
+  }
+}
+
+
+/**
+ datatype
+ debug 
+ turtle
+ function
+ loop for , loop while, nested loop
+ string
+ method
+ function
+
+ 
+*/
